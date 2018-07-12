@@ -5,63 +5,61 @@ import {ChatBar} from './ChatBar.jsx';
 import {Header} from './Header.jsx';
 require("../styles/application.scss");
 
+// const client = new WebSocket("ws://localhost:3001",'protocolOne');
+// const handleNewMessage = (event) =>{
+//   console.log()
+// }
+
 class App extends Component {
   constructor(props){
     super(props);
     this.socket = new WebSocket("ws://localhost:3001",'protocolOne');
     this.message = { } ;
     this.state = {
-      currentuser : {name:'anonymous' },
-      
-      messages : [
-        {
-          username:'bob',
-          content:'test'
-        }
-    ]
+      currentuser : {name:'Bob' },
+      messages : []
     }
     this.newPost = this.newPost.bind(this);
   }
   componentDidMount() {
-    // console.log("componentDidMount <App />");
-    // setTimeout(() => {
-    //   console.log("Simulating incoming message");
-    //   // Add a new message to the list of messages in the data store
-    //   const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-    //   const messages = this.state.messages.concat(newMessage)
-    //   // Update the state of the app component.
-    //   // Calling setState will trigger a call to render() in App and all child components.
-    //   this.setState({messages: messages})
-    // }, 3000);
-    // console.log('component didmount');
-     
-      //this.socket.onopen =  (event) => {
-       // this.socket.send("user: " + this.message.username + " says: " + this.message.content);
-       this.socket.onopen =  (event) => { 
-       this.socket.send(JSON.stringify(this.message))
+    this.socket.onopen =  (event) => { 
+      this.socket.send(JSON.stringify(this.message||''))
     };
+    this.socket.onmessage = (event)   =>{
+      //console.log('server data content: ',typeof event.data );
+      var obj = JSON.parse(event.data);
+      //console.log('obj is ',obj);
+      this.setState({
+        messages : [...this.state.messages, {username: obj['username'],
+          content: obj['content'], id: obj['id']}]
+      })
+    }
 
     
   }
-  newPost(username, content) {
-    console.log('content is', content);
-    this.message.username = username;
-    this.message.content = content;
-    this.setState({
-       
-      messages : [...this.state.messages, {username: username,
-        content: content}]
-    })
 
- 
+  newPost(username, content, messagetype) {
+    if(this.state.currentuser.name !== username){
+      let obj = {
+        content: this.state.currentuser.name + ' name change ' + username,
+        type: 'postNotification'
+      } 
+      console.log('obj is ', JSON.stringify(obj));
+      this.socket.send(JSON.stringify(obj));
+      console.log('changed sent')
+    }
+    this.message['username'] = username;
+    this.message.content = content;
+    this.message.type = messagetype
+    this.socket.send(JSON.stringify(this.message));
   }
   render() {
     const messages=[{username:'khoa', content:'test'}];
     return (
       <div>
-        <Header currentuser = {this.state.currentuser}/>
-        <MessageList messages={this.state.messages}/>
-        <ChatBar currentuser= {this.state.currentuser} newPost = {this.newPost} socket = {this.socket}/> 
+        <Header currentuser = {this.state.currentuser }/>
+        <MessageList messages={this.state.messages } currentuser = {this.state.currentuser }/>
+        <ChatBar currentuser= {this.state.currentuser } newPost = {this.newPost} socket = {this.socket}/> 
       </div>
        
     );

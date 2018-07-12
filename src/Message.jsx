@@ -9,8 +9,8 @@ class Message extends React.Component {
     return (
     <div>
       <div className="message" >
-            <span className="message-username">{this.props.message.username}</span>
-            <span className="message-content">{this.props.message.content}</span>
+            <span className="message-username">{this.props.message.username }</span>
+            <span className="message-content">{this.props.message.content ? this.props.message.content: ''}</span>
       </div>
     </div>
     )
@@ -20,7 +20,7 @@ class Message extends React.Component {
       <div >
         <div>  {this.createmessage(this.props.message)} </div>
         <div className="message system">
-            Anonymous1 changed their name to nomnom.
+            {this.props.message.username} changed their name to nomnom.
         </div>
       </div>
     )
