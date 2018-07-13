@@ -1,7 +1,7 @@
-React Boilerplate
-=====================
+# chattyApp Project
+chattyApp is a web application build with Node, React and Web socket that allows users to chat
 
-A minimal and light dev environment for ReactJS.
+ 
 
 ### Usage
 
@@ -45,5 +45,5 @@ npm run lint
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 
 ## Final Product
-!["This is the app home screen"](https://github.com/NguyenKhoa2014/tinyapp/raw/master/01-HomeScreen.png?raw=true)
-!["Chat screen"](02-URLs-ForLoggedInUser.png) 
+!["This is the app home screen"](https://github.com/NguyenKhoa2014/chattyApp/blob/master/screenshot/01-ChattyApp-Home.png?raw=true)
+!["Chat screen"](https://github.com/NguyenKhoa2014/chattyApp/blob/master/screenshot/02-ChatScreen.png?raw=true) 
