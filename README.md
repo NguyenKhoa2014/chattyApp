@@ -43,3 +43,7 @@ npm run lint
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+
+## Final Product
+!["This is the app home screen"](https://github.com/NguyenKhoa2014/tinyapp/raw/master/01-HomeScreen.png?raw=true)
+!["Chat screen"](02-URLs-ForLoggedInUser.png) 
