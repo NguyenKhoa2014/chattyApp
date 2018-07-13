@@ -4,6 +4,7 @@ import Notification from './Notification.jsx';
 class  MessageList extends React.Component{
   constructor(props){
     super(props);
+    //console.log('message list props.sessionsArray ', props.sessionsArray);
     this.renderMessages = this.renderMessages.bind(this);
      
   }
@@ -13,7 +14,7 @@ class  MessageList extends React.Component{
         <div>
           { message.type === 'postMessage'
             ? (<Notification message = {message} /> )
-            : (<Message key={index} message = {message}/>)
+            : (<Message key={index} message = {message} />)
           }
         </div>
       );

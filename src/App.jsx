@@ -13,6 +13,8 @@ class App extends Component {
     this.state = {
       currentuser : {name:'Bob' },
       olduser: {},
+      sessionsArray: [],
+      user_id: '',
       users: 0,
       messages : []
     }
@@ -20,12 +22,22 @@ class App extends Component {
   }
   componentDidMount() {
     this.socket.onopen =  (event) => { 
+      //this.newPost('user', 'So and so has joined the channel', 'postNotification');
       //this.socket.send(JSON.stringify(this.message||''))
     };
     this.socket.onmessage = (event)   =>{
       var obj = JSON.parse(event.data);
+      console.log('obj is on message', obj);
+      var newSession = { 
+         color  : obj.color,
+         session_id : obj.session_id
+      } 
       if (obj.type === 'usersOnline' ){
-        this.setState({users: obj.usersOnline}); 
+        this.setState({
+          users: obj.usersOnline,
+          sessionsArray : [...this.state.sessionsArray].push(newSession) 
+        });
+        console.log('after set state ', this.sessionsArray)  
       }      
       if (obj.type === "incomingMessage"){
         this.setState({
@@ -51,18 +63,22 @@ class App extends Component {
       type,
       content
     };
-
-      this.socket.send(JSON.stringify(message));
+    this.socket.send(JSON.stringify(message));
   }
 
   render() { 
     return (
       <div>
         <Header users = {this.state.users}/>
-        <MessageList messages={this.state.messages } currentuser = {this.state.currentuser } olduser = {this.state.olduser}/>
-        <ChatBar currentuser= {this.state.currentuser } newPost = {this.newPost} /> 
-      </div>
-       
+        <MessageList
+          sessionsArray = {this.state.sessionsArray} 
+          messages={this.state.messages } 
+        />
+        <ChatBar 
+          currentuser= {this.state.currentuser } 
+          newPost = {this.newPost} 
+        /> 
+    </div>
     );
   }
 }
