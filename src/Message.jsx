@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 class Message extends React.Component {
   constructor(props){
     super(props);
-    //console.log('in Message class, props.message.username is: ',props.message.username) 
+    console.log('props, props.message : ',props) 
     this.createmessage = this.createmessage.bind(this);
   }
+  // renderNotification(notification){
+  //   if(this.props.message.Notification){
+  //     return ( 
+  //       <div className="message system">
+  //       User {this.props.message.olduser} changed name to {this.props.message.username}
+  //        </div>
+  //     )
+  //   }
+  // }
   createmessage(props){
     return (
     <div>
@@ -19,9 +28,6 @@ class Message extends React.Component {
     return (
       <div >
         <div>  {this.createmessage(this.props.message)} </div>
-        <div className="message system">
-            {this.props.message.username} changed their name to nomnom.
-        </div>
       </div>
     )
   }

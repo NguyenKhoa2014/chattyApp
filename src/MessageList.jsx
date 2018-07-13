@@ -1,22 +1,22 @@
 import React, {Component} from 'react';
-import Message from './Message.jsx'
+import Message from './Message.jsx';
+import Notification from './Notification.jsx';
 class  MessageList extends React.Component{
   constructor(props){
-     
     super(props);
-    //console.log('props in msg list ',props.currentuser.name)
+    this.renderMessages = this.renderMessages.bind(this);
      
-    // this.createmessage = this.createmessage.bind(this);
   }
-  
+ 
   renderMessages(messages){
-    // const messages = props.messages;
-    return messages.map( (message, index) => {
-      //console.log('message in map',message.username, message.content);
-      return (
-        <Message key={index} message = {message} />
-      )
-    })
+    return messages.map( (message, index) =>
+        <div>
+          { message.type === 'postMessage'
+            ? (<Notification message = {message} /> )
+            : (<Message key={index} message = {message}/>)
+          }
+        </div>
+      );
 
   }
   render(){
