@@ -27,7 +27,7 @@ class App extends Component {
     };
     this.socket.onmessage = (event)   =>{
       var obj = JSON.parse(event.data);
-      console.log('obj is on message', obj);
+      console.log('obj is onmessage', obj);
       var newSession = { 
          color  : obj.color,
          session_id : obj.session_id
