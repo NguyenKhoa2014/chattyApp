@@ -35,10 +35,11 @@ class App extends Component {
       if (obj.type === 'usersOnline' ){
         this.setState({
           users: obj.usersOnline,
-          sessionsArray : [...this.state.sessionsArray].push(newSession) 
+          sessionsArray : [...this.state.sessionsArray, newSession]
         });
-        console.log('after set state ', this.sessionsArray)  
+        console.log('after set state ', this.state.sessionsArray)  
       }      
+
       if (obj.type === "incomingMessage"){
         this.setState({
           messages : [...this.state.messages, {username: obj['username'],
